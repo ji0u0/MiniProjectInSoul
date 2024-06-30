@@ -35,10 +35,10 @@ public class Phonebook : MonoBehaviour
     {
         // Add Data
         contacts.Add(new Contact("kangjiwoo", "01092139670"));
-        contacts.Add(new Contact("kangsumin", "01020182373"));
-        contacts.Add(new Contact("kangsungil", "01092289010"));
+        contacts.Add(new Contact("kangsumin", "01020182374"));
+        contacts.Add(new Contact("kangjaewook", "01085129670"));
+        contacts.Add(new Contact("kangsungil", "01088329228"));
         contacts.Add(new Contact("moonkyungran", "01064772374"));
-        contacts.Add(new Contact("kangjaewook", "01088309670"));
 
         // Add Listen to UI
         dropdown.onValueChanged.AddListener(delegate {
@@ -73,8 +73,7 @@ public class Phonebook : MonoBehaviour
         // 검색어가 비었다면 전체 출력
         if (string.IsNullOrEmpty(searchQuery))
         {
-            searchResultText.text = string.Join("\n", contacts.Select(contact
-                => $"Name: {contact.Name}, Phone: {contact.PhoneNumber}"));
+            searchResultText.text = string.Join("\n", contacts.Select(contact => $"Name: {contact.Name}, Phone: {contact.PhoneNumber}"));
 
             return;
         }
@@ -97,15 +96,14 @@ public class Phonebook : MonoBehaviour
         }
         else
         {
-            searchResultText.text = "Input only numbers or only alphabets";
+            searchResultText.text = "Input only Numbers or only English";
             return;
         }
 
         // 결과가 비어있다면 -> 예외 처리
         if (results.Any())
         {
-            searchResultText.text = string.Join("\n", results.Select(contact
-                => $"Name: {contact.Name}, Phone: {contact.PhoneNumber}"));
+            searchResultText.text = string.Join("\n", results.Select(contact => $"Name: {contact.Name}, Phone: {contact.PhoneNumber}"));
         }
         else
         {
@@ -217,7 +215,7 @@ public class Phonebook : MonoBehaviour
                 results.Add(contact);
 
                 // 범위를 왼쪽으로 확장
-                int temp = mid;
+                int temp = mid - 1;
                 while (temp >= 0 && contacts[temp].PhoneNumber.Contains(searchQuery))
                 {
                     results.Add(contacts[temp]);
@@ -225,7 +223,7 @@ public class Phonebook : MonoBehaviour
                 }
 
                 // 범위를 오른쪽으로 확장
-                temp = mid;
+                temp = mid + 1;
                 while (temp < contacts.Count && contacts[temp].PhoneNumber.Contains(searchQuery))
                 {
                     results.Add(contacts[temp]);
@@ -245,7 +243,7 @@ public class Phonebook : MonoBehaviour
             }
         }
 
-        return results.OrderBy(contact => contact.Name).ToList();
+        return results.OrderBy(contact => contact.PhoneNumber).ToList();
     }
 
     public void AddContact()
