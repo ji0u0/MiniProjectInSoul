@@ -7,6 +7,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 변형 이진 탐색
+// 장점: 시간 복잡도 O(log⁡n)
+// 단점: 검색이 완전하지 않음
 public class Phonebook : MonoBehaviour
 {
     // Data
