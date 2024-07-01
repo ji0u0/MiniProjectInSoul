@@ -23,14 +23,28 @@ public class TrieSearch : MonoBehaviour
         phoneBook.AddContact("kangjaewook", "01085129670");
         phoneBook.AddContact("kangsungil", "01088329228");
         phoneBook.AddContact("moonkyungran", "01064772374");
+        phoneBook.AddContact("leeyoungho", "01012345678");
+        phoneBook.AddContact("kimjiyoung", "01023456789");
+        phoneBook.AddContact("parkminsoo", "01034567890");
+        phoneBook.AddContact("choiheesun", "01045678901");
+        phoneBook.AddContact("yoonhyunwoo", "01056789012");
+        phoneBook.AddContact("jangdongmin", "01067890123");
+        phoneBook.AddContact("shimchangmin", "01078901234");
+        phoneBook.AddContact("ohsehun", "01089012345");
+        phoneBook.AddContact("jungyumi", "01090123456");
+        phoneBook.AddContact("kwonhyojin", "01091234567");
+        phoneBook.AddContact("baekhyunjoo", "01010345678");
+        phoneBook.AddContact("sunwoojung", "01011456789");
+        phoneBook.AddContact("imsoojin", "01012567890");
+        phoneBook.AddContact("namdonghyun", "01013678901");
+        phoneBook.AddContact("hanchaeun", "01014789012");
+        phoneBook.AddContact("soryujin", "01015890123");
+        phoneBook.AddContact("ryuseojin", "01016901234");
+        phoneBook.AddContact("kojihoon", "01017012345");
+        phoneBook.AddContact("chaejoon", "01018123456");
+        phoneBook.AddContact("ahnsoyoung", "01019234567");
 
         searchButton.onClick.AddListener(SearchContact);
-
-        var results = phoneBook.SearchContacts("Da");
-        foreach (var result in results)
-        {
-            Debug.Log(result);
-        }
     }
 
     // Update is called once per frame
@@ -49,81 +63,81 @@ public class TrieSearch : MonoBehaviour
     }
 }
 
-public class PhoneBook
-{
-    private readonly TrieNode root = new TrieNode();
+// public class PhoneBook
+// {
+//     private readonly TrieNode root = new TrieNode();
 
-    public void AddContact(string name, string phoneNumber)
-    {
-        var currentNode = root;
+//     public void AddContact(string name, string phoneNumber)
+//     {
+//         var currentNode = root;
 
-        foreach (var ch in name)
-        {
-            // 현재 ch가 현재 node의 children에 없다면 새 node를 판다
-            if (!currentNode.Children.ContainsKey(ch))
-            {
-                currentNode.Children[ch] = new TrieNode();
-            }
+//         foreach (var ch in name)
+//         {
+//             // 현재 ch가 현재 node의 children에 없다면 새 node를 판다
+//             if (!currentNode.Children.ContainsKey(ch))
+//             {
+//                 currentNode.Children[ch] = new TrieNode();
+//             }
 
-            //  현재 node를 찾은 node(혹은 생성한 node)로 변경한다
-            currentNode = currentNode.Children[ch];
-        }
+//             //  현재 node를 찾은 node(혹은 생성한 node)로 변경한다
+//             currentNode = currentNode.Children[ch];
+//         }
         
-        // 단어의 끝임을 표시
-        currentNode.IsEndOfWord = true;
-        currentNode.PhoneNumber = phoneNumber;
-    }
+//         // 단어의 끝임을 표시
+//         currentNode.IsEndOfWord = true;
+//         currentNode.PhoneNumber = phoneNumber;
+//     }
 
-    public List<Contact> SearchContacts(string partialName)
-    {
-        var currentNode = root;
+//     public List<Contact> SearchContacts(string partialName)
+//     {
+//         var currentNode = root;
 
-        // 검색어 노드가 존재하는 지 확인
-        foreach (var ch in partialName)
-        {
-            if (!currentNode.Children.ContainsKey(ch))
-            {
-                return new List<Contact>();
-            }
+//         // 검색어 노드가 존재하는 지 확인
+//         foreach (var ch in partialName)
+//         {
+//             if (!currentNode.Children.ContainsKey(ch))
+//             {
+//                 return new List<Contact>();
+//             }
 
-            currentNode = currentNode.Children[ch];
-        }
+//             currentNode = currentNode.Children[ch];
+//         }
         
-        // 검색어 Node까지 도달했다면...
-        return CollectContacts(currentNode, partialName);
-    }
+//         // 검색어 Node까지 도달했다면...
+//         return CollectContacts(currentNode, partialName);
+//     }
 
-    // 접두사의 자식 노드를 collect하는 함수
-    private List<Contact> CollectContacts(TrieNode node, string prefix)
-    {
-        var contacts = new List<Contact>();
+//     // 접두사의 자식 노드를 collect하는 함수
+//     private List<Contact> CollectContacts(TrieNode node, string prefix)
+//     {
+//         var contacts = new List<Contact>();
 
-        // 단어가 끝나면 리스트에 추가
-        if (node.IsEndOfWord)
-        {
-            contacts.Add(new Contact(prefix, node.PhoneNumber));
-        }
+//         // 단어가 끝나면 리스트에 추가
+//         if (node.IsEndOfWord)
+//         {
+//             contacts.Add(new Contact(prefix, node.PhoneNumber));
+//         }
 
-        // 단어가 끝날 때까지 자식 접두사와 자식 노드를 합친다
-        foreach (var child in node.Children)
-        {
-            contacts.AddRange(CollectContacts(child.Value, prefix + child.Key));
-        }
+//         // 단어가 끝날 때까지 자식 접두사와 자식 노드를 합친다
+//         foreach (var child in node.Children)
+//         {
+//             contacts.AddRange(CollectContacts(child.Value, prefix + child.Key));
+//         }
 
-        return contacts;
-    }
-}
+//         return contacts;
+//     }
+// }
 
-public class TrieNode
-{
-    public Dictionary<char, TrieNode> Children { get; set; } // 자식 노드를 저장하는 딕셔너리
-    public bool IsEndOfWord { get; set; } // 단어의 끝인가?
-    public string PhoneNumber { get; set; } // 전화번호 (끝이 아니면 null)
+// public class TrieNode
+// {
+//     public Dictionary<char, TrieNode> Children { get; set; } // 자식 노드를 저장하는 딕셔너리
+//     public bool IsEndOfWord { get; set; } // 단어의 끝인가?
+//     public string PhoneNumber { get; set; } // 전화번호 (끝이 아니면 null)
 
-    public TrieNode()
-    {
-        Children = new Dictionary<char, TrieNode>();
-        IsEndOfWord = false;
-        PhoneNumber = null;
-    }
-}
+//     public TrieNode()
+//     {
+//         Children = new Dictionary<char, TrieNode>();
+//         IsEndOfWord = false;
+//         PhoneNumber = null;
+//     }
+// }
